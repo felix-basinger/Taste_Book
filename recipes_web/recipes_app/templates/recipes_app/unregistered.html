@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center">
+        <h2 class="mb-4" style="font-size: 50px;  ">Мои рецепты</h2>
+        <p class="lead" style="font-size: 30px; padding-bottom: 50px;">Для просмотра своих рецептов необходимо
+          <a href="{% url 'register' %}" class="btn btn-outline-success">зарегистрироваться</a> или
+          <a href="{% url 'login' %}" class="btn btn-outline-primary">войти</a> в систему.</p>
+    </div>
+</div>
+{% endblock %}

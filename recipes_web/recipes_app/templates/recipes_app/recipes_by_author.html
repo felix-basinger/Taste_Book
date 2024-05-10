@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Рецепты автора{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if recipes %}
+    {% with author=recipes.0.author %}
+    <h2 class="text-center mb-4">Рецепты автора:
+        {% if author.first_name and author.last_name %}
+        {{ author.first_name }} {{ author.last_name }}
+        {% else %}
+        {{ author.username }}
+        {% endif %}
+    </h2>
+    {% endwith %}
+
+    <div class="row">
+        {% for recipe in recipes %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title" style="text-align: center;">
+                            <a href="{% url 'recipe' recipe.pk %}" class="stretched-link"
+                               style="text-decoration: none; color: black;">{{ recipe.title }}</a></h3>
+                    <p class="card-text flex-grow-1" style="font-size: 20px;">{{ recipe.description|truncatewords:20 }}</p>
+                    <div class="mt-auto">
+                            <p><h5>Категории:</h5>
+                                {% for category in recipe.category.all %}
+                                <a href="{% url 'recipe' category.id %}" style="font-size: 16px;" class="badge bg-secondary text-decoration-none">
+                                    {{ category.name }}{% if not forloop.last %}<br> {% endif %}
+                                </a>
+                            {% endfor %}
+                            </p>
+                        </div>
+                    <p class="card-text"><small class="text-muted">Добавлен: {{ recipe.add_time }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

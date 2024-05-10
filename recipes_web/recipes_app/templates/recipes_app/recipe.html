@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Рецепты{% endblock %}
+
+{% block content %}
+
+{% load custom_filters %}
+
+<div class="container mt-5">
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+        {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" class="card-img-top img-fluid" alt="{{ recipe.title }}">
+        {% endif %}
+        <div class="card-body text-center">
+            <h1 class="card-title">{{ recipe.title }}</h1>
+            <h3 class="mt-3">Категории:</h3>
+            <p style="font-size: 22px;">
+                {% for category in recipe.category.all %}
+                    <a href="{% url 'recipes_category' category.id %}" class="badge bg-secondary text-decoration-none">
+                        {{ category.name }}{% if not forloop.last %}<br> {% endif %}
+                    </a>
+                {% endfor %}
+            </p>
+            <h3>Описание:</h3>
+            <p style="font-size: 22px;">{{ recipe.description }}</p>
+            <h3>Ингредиенты:</h3>
+            <p style="font-size: 22px;">{{ recipe.ingredients|semicolon_to_br|safe }}</p>
+            <h3>Время готовки:</h3>
+            <p style="font-size: 22px;">{{ recipe.cooking_time }}</p>
+            <h3>Шаги приготовления:</h3>
+            <p style="font-size: 22px;">{{ recipe.preparation_steps|semicolon_to_br|safe }}</p>
+            <h3>Автор рецепта:</h3>
+            <p style="font-size: 22px;  "><a href="{% url 'author' recipe.author_id %}"
+                                                           class="text-decoration-none" style="color: #FF4500;">{{ recipe.author }}</a></p>
+            <p class="card-text"><small class="text-muted">Добавлен: {{ recipe.add_time }}</small></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
