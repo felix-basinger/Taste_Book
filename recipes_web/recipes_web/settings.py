@@ -31,7 +31,7 @@ CSRF_COOKIE_SECURE = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.1.9',
-    'basinger.pythonanywhere.com',
+    'Basinger.pythonanywhere.com',
 ]
 
 INTERNAL_IPS = [
