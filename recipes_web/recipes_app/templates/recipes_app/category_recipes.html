@@ -5,38 +5,41 @@
 {% block content %}
 
 <div class="text-center" style="padding-bottom: 40px;">
-        <h1 class="mb-3">Рецепты категории: {{ category_name }}</h1>
+    <h1 class="mb-3">Рецепты категории: {{ category_name }}</h1>
 </div>
 {% if recipes %}
 <div class="row">
-        {% for recipe in recipes %}
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                {% if recipe.image %}
-                <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.title }}">
-                {% endif %}
-                <div class="card-body">
-                    <h3 class="card-title" style="text-align: center;">
-                            <a href="{% url 'recipe' recipe.pk %}" class="stretched-link"
-                               style="text-decoration: none; color: black;">{{ recipe.title }}</a></h3>
-                    <p class="card-text flex-grow-1" style="font-size: 20px;">{{ recipe.description|truncatewords:20 }}</p>
-                    <div class="mt-auto">
-                            <p><h5>Категории:</h5>
-                                {% for category in recipe.category.all %}
-                                <a href="{% url 'recipe' category.id %}" style="font-size: 16px;" class="badge bg-secondary text-decoration-none">
-                                    {{ category.name }}{% if not forloop.last %}<br> {% endif %}
-                                </a>
-                            {% endfor %}
-                            </p>
-                        </div>
-                    <p class="card-text"><small class="text-muted">Добавлен: {{ recipe.add_time }}</small></p>
+    {% for recipe in recipes %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.title }}">
+            {% endif %}
+            <div class="card-body">
+                <h3 class="card-title" style="text-align: center;">
+                    <a href="{% url 'recipe' recipe.pk %}" class="stretched-link"
+                       style="text-decoration: none; color: black;">{{ recipe.title }}</a></h3>
+                <p class="card-text flex-grow-1" style="font-size: 20px;">{{ recipe.description|truncatewords:20 }}</p>
+                <div class="mt-auto">
+                    <p><h5>Категории:</h5>
+                    {% for category in recipe.category.all %}
+                    <a href="{% url 'recipe' category.id %}" style="font-size: 16px;"
+                       class="badge bg-secondary text-decoration-none">
+                        {{ category.name }}{% if not forloop.last %}<br> {% endif %}
+                    </a>
+                    {% endfor %}
+                    </p>
+                    <p><h5>Автор:</h5> <a href="{% url 'author' recipe.author_id %}"
+                                          style="font-size: 18px; text-decoration: none; color: #FF4500;">{{ recipe.author }}</a></p>
                 </div>
+                <p class="card-text"><small class="text-muted">Добавлен: {{ recipe.add_time }}</small></p>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 {% else %}
-    <div class="container mt-5">
+<div class="container mt-5">
     <div class="text-center" style="padding-bottom: 50px;">
         <p class="lead" style="font-size: 50px">Нет рецептов.</p>
 

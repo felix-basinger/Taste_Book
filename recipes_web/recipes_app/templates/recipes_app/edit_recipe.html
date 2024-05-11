@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin: 0 auto; max-width: 500px; padding-bottom: 50px;">
+<h1 style="text-align: center;">Редактировать рецепт: {{ recipe.title }}</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="max-width: 500px;">{{ form.as_p }}</div>
+    <button class="btn" style="background-color: #FF4500; color: white;" type="submit">Сохранить изменения</button>
+</form>
+</div>
+{% endblock %}

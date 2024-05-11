@@ -91,3 +91,17 @@ def your_view(request):
 def my_views(request):
     categories = Category.objects.all()
     return render(request, 'base.html', {'categories': categories})
+
+
+@login_required
+def edit_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id,
+                               author=request.user)
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+        if form.is_valid():
+            form.save()
+            return redirect('recipe', recipe_id)
+    else:
+        form = RecipeForm(instance=recipe)
+    return render(request, 'recipes_app/edit_recipe.html', {'form': form, 'recipe': recipe})
